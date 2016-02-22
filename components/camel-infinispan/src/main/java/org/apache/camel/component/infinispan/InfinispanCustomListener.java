@@ -18,12 +18,21 @@ package org.apache.camel.component.infinispan;
 
 import java.util.Set;
 
-import org.infinispan.notifications.Listener;
+/**
+ * This class is supposed to be extended by users and annotated with @Listener or @ClientListener
+ * and passed to the consumer endpoint through the 'customListener' parameter.
+ */
+public abstract class InfinispanCustomListener extends InfinispanEventListener {
 
-@Listener(sync = false)
-public class InfinispanAsyncEventListener extends InfinispanSyncEventListener {
+    public InfinispanCustomListener(InfinispanConsumer infinispanConsumer, Set<String> eventTypes) {
+        super(infinispanConsumer, eventTypes);
+    }
 
-    public InfinispanAsyncEventListener(InfinispanConsumer consumer, Set<String> eventTypes) {
-        super(consumer, eventTypes);
+    public InfinispanConsumer getInfinispanConsumer() {
+        return infinispanConsumer;
+    }
+
+    public void setInfinispanConsumer(InfinispanConsumer infinispanConsumer) {
+        this.infinispanConsumer = infinispanConsumer;
     }
 }

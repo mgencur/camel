@@ -16,37 +16,50 @@
  */
 package org.apache.camel.component.infinispan;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.apache.camel.spi.Metadata;
 import org.apache.camel.spi.UriParam;
 import org.apache.camel.spi.UriParams;
 import org.apache.camel.spi.UriPath;
 import org.infinispan.commons.api.BasicCacheContainer;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 @UriParams
 public class InfinispanConfiguration {
-    private BasicCacheContainer cacheContainer;
     @UriPath @Metadata(required = "true")
     private String host;
     @UriParam
-    private String cacheName;
+    private BasicCacheContainer cacheContainer;
     @UriParam
+    private String cacheName;
+    @UriParam(label = "producer", defaultValue = "put", enums = "put,putAll,putIfAbsent,putAsync,putAllAsync,putIfAbsentAsync,get,containsKey,containsValue,remove,removeAsync,"
+           + "replace,replaceAsync,clear,clearAsync,size")
     private String command;
-    @UriParam(defaultValue = "true")
+    @UriParam(label = "consumer", defaultValue = "true")
     private boolean sync = true;
+    @UriParam(label = "consumer")
     private Set<String> eventTypes;
+    @UriParam(label = "consumer")
+    private InfinispanCustomListener customListener;
+    @UriParam(label = "consumer", defaultValue = "false")
+    private boolean clustered;
 
     public String getCommand() {
         return command;
     }
 
+    /**
+     * The operation to perform.
+     */
     public void setCommand(String command) {
         this.command = command;
     }
 
+    /**
+     * Specifies the host of the cache on Infinispan instance
+     */
     public String getHost() {
         return host;
     }
@@ -55,6 +68,9 @@ public class InfinispanConfiguration {
         this.host = host;
     }
 
+    /**
+     * Specifies the cache Container to connect
+     */
     public BasicCacheContainer getCacheContainer() {
         return cacheContainer;
     }
@@ -63,6 +79,9 @@ public class InfinispanConfiguration {
         this.cacheContainer = cacheContainer;
     }
 
+    /**
+     * Specifies the cache name
+     */
     public String getCacheName() {
         return cacheName;
     }
@@ -71,6 +90,9 @@ public class InfinispanConfiguration {
         this.cacheName = cacheName;
     }
 
+    /**
+    * If true, the consumer will receive notifications synchronously
+    */
     public boolean isSync() {
         return sync;
     }
@@ -79,15 +101,55 @@ public class InfinispanConfiguration {
         this.sync = sync;
     }
 
+    /**
+     * If true, the listener will be installed for the entire cluster
+     */
+    public boolean isClustered() {
+        return clustered;
+    }
+
+    public void setClustered(boolean clustered) {
+        this.clustered = clustered;
+    }
+
     public Set<String> getEventTypes() {
         return eventTypes;
     }
 
+    /**
+     * Specifies the set of event types to register by the consumer. Multiple event can be separated by comma.
+     * <p/>
+     * The possible event types are: CACHE_ENTRY_ACTIVATED, CACHE_ENTRY_PASSIVATED, CACHE_ENTRY_VISITED, CACHE_ENTRY_LOADED,
+     * CACHE_ENTRY_EVICTED, CACHE_ENTRY_CREATED, CACHE_ENTRY_REMOVED, CACHE_ENTRY_MODIFIED, TRANSACTION_COMPLETED,
+     * TRANSACTION_REGISTERED, CACHE_ENTRY_INVALIDATED, DATA_REHASHED, TOPOLOGY_CHANGED, PARTITION_STATUS_CHANGED
+     */
     public void setEventTypes(Set<String> eventTypes) {
         this.eventTypes = eventTypes;
     }
 
+    /**
+     * Specifies the set of event types to register by the consumer. Multiple event can be separated by comma.
+     * <p/>
+     * The possible event types are: CACHE_ENTRY_ACTIVATED, CACHE_ENTRY_PASSIVATED, CACHE_ENTRY_VISITED, CACHE_ENTRY_LOADED,
+     * CACHE_ENTRY_EVICTED, CACHE_ENTRY_CREATED, CACHE_ENTRY_REMOVED, CACHE_ENTRY_MODIFIED, TRANSACTION_COMPLETED,
+     * TRANSACTION_REGISTERED, CACHE_ENTRY_INVALIDATED, DATA_REHASHED, TOPOLOGY_CHANGED, PARTITION_STATUS_CHANGED
+     */
     public void setEventTypes(String eventTypes) {
         this.eventTypes = new HashSet<String>(Arrays.asList(eventTypes.split(",")));
+    }
+
+    /**
+     * Returns the custom listener in use, if provided
+     */
+    public InfinispanCustomListener getCustomListener() {
+        return customListener;
+    }
+
+    public void setCustomListener(InfinispanCustomListener customListener) {
+        this.customListener = customListener;
+    }
+
+    public boolean isCustom() {
+        return customListener != null;
     }
 }

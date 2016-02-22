@@ -19,20 +19,21 @@ package org.apache.camel.component.infinispan;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.impl.JndiRegistry;
 import org.junit.Test;
 
-public class InfinispanSyncConsumerTest extends InfinispanTestSupport {
+public class InfinispanLocalConsumerCustomListenerIT extends InfinispanTestSupport {
+
+    private static final String CUSTOM_CACHE_NAME = "customCacheName";
 
     @EndpointInject(uri = "mock:result")
     private MockEndpoint mockResult;
 
-    @Test
-    public void consumerReceivedPreAndPostEntryCreatedEventNotifications() throws Exception {
-        mockResult.expectedMessageCount(2);
-        mockResult.setResultMinimumWaitTime(900);
-
-        currentCache().put(KEY_ONE, VALUE_ONE);
-        mockResult.assertIsSatisfied();
+    @Override
+    protected JndiRegistry createRegistry() throws Exception {
+        JndiRegistry registry = super.createRegistry();
+        registry.bind("myCustomListener", new MyEmbeddedCustomListener(CUSTOM_CACHE_NAME));
+        return registry;
     }
 
     @Override
@@ -40,11 +41,23 @@ public class InfinispanSyncConsumerTest extends InfinispanTestSupport {
         return new RouteBuilder() {
             @Override
             public void configure() {
-                from("infinispan://localhost?cacheContainer=#cacheContainer&sync=false&eventTypes=CACHE_ENTRY_CREATED")
-                        .delayer(500)
+                from("infinispan://?cacheContainer=#cacheContainer&cacheName=" + CUSTOM_CACHE_NAME + "&customListener=#myCustomListener")
                         .to("mock:result");
             }
         };
     }
-}
 
+    @Test
+    public void createEventConsumed() throws InterruptedException {
+        //One for the existing entry and one for the new entry.
+        mockResult.expectedMessageCount(2);
+
+        basicCacheContainer.getCache(CUSTOM_CACHE_NAME).put("newKey", "newValue");
+
+        mockResult.message(0).outHeader(InfinispanConstants.IS_PRE).isEqualTo(true);
+        mockResult.message(0).outHeader(InfinispanConstants.KEY).isEqualTo("newKey");
+        mockResult.message(1).outHeader(InfinispanConstants.IS_PRE).isEqualTo(false);
+
+        mockResult.assertIsSatisfied();
+    }
+}

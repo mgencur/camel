@@ -43,12 +43,12 @@
         </dependency>
         <dependency>
             <groupId>org.infinispan</groupId>
-            <artifactId>infinispan-core</artifactId>
+            <artifactId>infinispan-embedded</artifactId>
             <version>${infinispan-version}</version>
         </dependency>
         <dependency>
             <groupId>org.infinispan</groupId>
-            <artifactId>infinispan-client-hotrod</artifactId>
+            <artifactId>infinispan-remote</artifactId>
             <version>${infinispan-version}</version>
         </dependency>
 
@@ -57,6 +57,13 @@
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-test</artifactId>
             <version>2.15.1.redhat-621084</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-core</artifactId>
+            <version>${infinispan-version}</version>
+            <type>test-jar</type>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -76,4 +83,24 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <!-- unit testing requires java 8 -->
+    <profiles>
+        <profile>
+            <id>jdk8-test</id>
+            <activation>
+                <jdk>!1.8</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

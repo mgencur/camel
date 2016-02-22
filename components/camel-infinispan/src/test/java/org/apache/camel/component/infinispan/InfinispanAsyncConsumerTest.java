@@ -21,7 +21,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.junit.Test;
 
-public class InfinispanSyncConsumerTest extends InfinispanTestSupport {
+public class InfinispanAsyncConsumerTest extends InfinispanTestSupport {
 
     @EndpointInject(uri = "mock:result")
     private MockEndpoint mockResult;
