@@ -1,0 +1,10 @@
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <module name="org.infinispan.client.hotrod" slot="${datagrid.slot}" />
+            <module name="org.infinispan.protostream" slot="${datagrid.slot}" />
+            <module name="org.infinispan.query.dsl" slot="${datagrid.slot}" />
+            <module name="org.infinispan.query.remote.client" slot="${datagrid.slot}" />
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>
