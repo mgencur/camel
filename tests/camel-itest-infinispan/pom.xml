@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-
+  
   http://www.apache.org/licenses/LICENSE-2.0
-
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,46 +23,17 @@
     <groupId>org.apache.camel</groupId>
     <artifactId>camel-parent</artifactId>
     <version>2.15.1-redhat-SNAPSHOT</version>
-    <relativePath>../parent</relativePath>
+    <relativePath>../../parent</relativePath>
   </parent>
 
-  <artifactId>tests</artifactId>
-  <name>Camel :: Integration Tests</name>
-  <description>Camel Integration Tests</description>
+  <artifactId>camel-itest-jdg</artifactId>
+  <name>Camel :: Integration Tests :: JDG</name>
+  <description>Performs OSGi compliance integration tests with JDG</description>
   <packaging>pom</packaging>
 
   <modules>
-    <module>camel-itest-infinispan</module>
+    <module>camel-itest-jdg-fuse</module>
+    <module>camel-itest-jdg-eap</module>
   </modules>
 
-  <profiles>
-    <!-- includes these modules when doing the release -->
-    <profile>
-      <id>release</id>
-      <modules>
-        <module>camel-itest-karaf</module>
-        <module>camel-itest-osgi</module>
-        <module>camel-itest-performance</module>
-        <module>camel-performance</module>
-      </modules>
-    </profile>
-
-    <!-- osgi tests -->
-    <profile>
-      <id>osgi.test</id>
-      <modules>
-        <module>camel-itest-karaf</module>
-        <module>camel-itest-osgi</module>
-      </modules>
-    </profile>
-
-    <!-- performance tests -->
-    <profile>
-      <id>performance.test</id>
-      <modules>
-        <module>camel-itest-performance</module>
-        <module>camel-performance</module>
-      </modules>
-    </profile>
-  </profiles>
 </project>

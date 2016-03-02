@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.0.0">
+    <feature name="query-sample-domain" version="${project.version}">
+        <bundle>mvn:org.infinispan.protostream/sample-domain-implementation/${protostream-version}</bundle>
+        <bundle>mvn:org.infinispan.protostream/sample-domain-definition/${protostream-version}</bundle>
+    </feature>
+    <feature name="infinispan-server-testsuite" version="${project.version}">
+        <bundle>wrap:mvn:org.infinispan.server/infinispan-server-testsuite/${infinispan-version}/jar/tests$Export-Package=!org.infinispan.persistence.cluster,*</bundle>
+    </feature>
+</features>
