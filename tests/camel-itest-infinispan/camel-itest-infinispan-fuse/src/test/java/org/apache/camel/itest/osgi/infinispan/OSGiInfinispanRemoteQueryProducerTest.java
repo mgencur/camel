@@ -29,10 +29,7 @@ import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerSuite;
 import org.osgi.framework.BundleContext;
 
-import static org.apache.camel.itest.osgi.infinispan.util.IspnKarafOptions.camelHotRodClient;
-import static org.apache.camel.itest.osgi.infinispan.util.IspnKarafOptions.camelInfinispanAndTests;
-import static org.apache.camel.itest.osgi.infinispan.util.IspnKarafOptions.camelTestOptions;
-import static org.apache.camel.itest.osgi.infinispan.util.IspnKarafOptions.commonOptions;
+import static org.apache.camel.itest.osgi.infinispan.util.IspnKarafOptions.*;
 import static org.ops4j.pax.exam.CoreOptions.options;
 
 
@@ -46,6 +43,11 @@ public class OSGiInfinispanRemoteQueryProducerTest extends InfinispanRemoteQuery
     @Override
     protected CamelContext createCamelContext() throws Exception {
         return new CamelContextFactory(bundleContext, createRegistry()).createContext();
+    }
+
+    @Override
+    protected int getHotRodPort() {
+        return 11322;
     }
 
     @Configuration

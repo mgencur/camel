@@ -26,14 +26,14 @@
     <relativePath>../../parent</relativePath>
   </parent>
 
-  <artifactId>camel-itest-jdg</artifactId>
+  <artifactId>camel-itest-infinispan</artifactId>
   <name>Camel :: Integration Tests :: JDG</name>
   <description>Performs OSGi compliance integration tests with JDG</description>
   <packaging>pom</packaging>
 
   <modules>
-    <module>camel-itest-jdg-fuse</module>
-    <module>camel-itest-jdg-eap</module>
+    <module>camel-itest-infinispan-fuse</module>
+    <module>camel-itest-infinispan-eap</module>
   </modules>
 
 </project>

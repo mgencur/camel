@@ -28,6 +28,7 @@ import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
 import org.infinispan.client.hotrod.configuration.ConfigurationBuilder;
 import org.infinispan.client.hotrod.marshall.ProtoStreamMarshaller;
+import org.infinispan.commons.util.OsgiClassLoader;
 import org.infinispan.commons.util.Util;
 import org.infinispan.protostream.FileDescriptorSource;
 import org.infinispan.protostream.SerializationContext;
@@ -72,10 +73,14 @@ public class InfinispanRemoteQueryProducerIT extends CamelTestSupport {
         };
     }
 
+    protected int getHotRodPort() {
+        return 11222;
+    }
+
     @Override
     protected void doPreSetup() throws IOException {
         ConfigurationBuilder builder = new ConfigurationBuilder().addServer()
-                .host("localhost").port(11222)
+                .host("localhost").port(getHotRodPort())
                 .marshaller(new ProtoStreamMarshaller());
 
         manager = new RemoteCacheManager(builder.build());
@@ -84,8 +89,7 @@ public class InfinispanRemoteQueryProducerIT extends CamelTestSupport {
                 .getCache(ProtobufMetadataManagerConstants.PROTOBUF_METADATA_CACHE_NAME);
         metadataCache
                 .put("sample_bank_account/bank.proto",
-                        Util.read(InfinispanRemoteQueryProducerIT.class
-                                .getResourceAsStream("/sample_bank_account/bank.proto")));
+                        Util.read(Util.isOSGiContext() ? OsgiClassLoader.getInstance().getResourceAsStream("/sample_bank_account/bank.proto") : InfinispanRemoteQueryProducerIT.class.getResourceAsStream("/sample_bank_account/bank.proto")));
         MarshallerRegistration.registerMarshallers(ProtoStreamMarshaller
                 .getSerializationContext(manager));
 

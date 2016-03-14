@@ -22,14 +22,14 @@
 
     <parent>
         <groupId>org.apache.camel</groupId>
-        <artifactId>camel-itest-jdg</artifactId>
+        <artifactId>camel-itest-infinispan</artifactId>
         <version>2.15.1-redhat-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>camel-itest-jdg-eap</artifactId>
+    <artifactId>camel-itest-infinispan-eap</artifactId>
     <name>Camel :: Integration Tests :: JDG/EAP</name>
-    <description>Performs integration tests with JDG in EAP</description>
+    <description>Performs integration tests with Infinispan in EAP</description>
 
     <properties>
         <jvm.memory.args>-Xmx512m -XX:MaxPermSize=512m</jvm.memory.args>

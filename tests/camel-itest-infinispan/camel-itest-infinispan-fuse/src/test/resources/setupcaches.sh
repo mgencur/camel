@@ -1,0 +1,2 @@
+java -jar $1/bin/client/jboss-cli-client.jar --controller=localhost:10090 -c /subsystem=datagrid-infinispan/cache-container=local/local-cache=remoteCache:add\(configuration="default"\)
+java -jar $1/bin/client/jboss-cli-client.jar --controller=localhost:10090 -c /subsystem=datagrid-infinispan/cache-container=local/local-cache=remote_query:add\(configuration="default"\)

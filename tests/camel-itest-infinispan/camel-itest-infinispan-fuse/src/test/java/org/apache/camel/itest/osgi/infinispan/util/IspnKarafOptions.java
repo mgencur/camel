@@ -128,8 +128,8 @@ public class IspnKarafOptions {
     }
 
     public static Option camelInfinispanAndTests() throws Exception {
-        return composite(mvnFeature("org.apache.camel", "camel-jbossdatagrid", "camel-jbossdatagrid", null),
-                mvnTestsAsFragmentBundle("org.apache.camel", "camel-jbossdatagrid", "org.apache.camel.camel-jbossdatagrid"),
+        return composite(mvnFeature("org.apache.camel", "camel-infinispan", "camel-infinispan", null),
+                mvnTestsAsFragmentBundle("org.apache.camel", "camel-infinispan", "org.apache.camel.camel-infinispan"),
                 mvnTestsAsFragmentBundle("org.infinispan", "infinispan-core", "org.infinispan.core"));
     }
 

@@ -22,14 +22,14 @@
 
     <parent>
         <groupId>org.apache.camel</groupId>
-        <artifactId>camel-itest-jdg</artifactId>
+        <artifactId>camel-itest-infinispan</artifactId>
         <version>2.15.1-redhat-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>camel-itest-jdg-fuse</artifactId>
+    <artifactId>camel-itest-infinispan-fuse</artifactId>
     <name>Camel :: Integration Tests :: JDG/Fuse</name>
-    <description>Performs OSGi compliance integration tests with JDG in Fuse</description>
+    <description>Performs OSGi compliance integration tests with Infinispan in Fuse</description>
 
     <properties>
         <maven.repo.local>${user.home}/.m2/repository</maven.repo.local>
@@ -121,6 +121,12 @@
             <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-remote</artifactId>
+            <version>${infinispan-version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -171,57 +177,69 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Needs to be adjusted to proper jboss plugin version and enabled -->
-            <!--<plugin>-->
-                <!--<groupId>org.jboss.as.plugins</groupId>-->
-                <!--<artifactId>jboss-as-maven-plugin</artifactId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>start-server</id>-->
-                        <!--<phase>process-test-classes</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>start</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<skip>${skipTests}</skip>-->
-                            <!--<jbossHome>${jdg.home}</jbossHome>-->
-                            <!--<jvmArgs>-Dinfinispan.accurate.bulk.ops=true</jvmArgs>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>configure-caches</id>-->
-                        <!--<phase>process-test-classes</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>execute-commands</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<executeCommands>-->
-                                <!--<commands>-->
-                                    <!--&lt;!&ndash; Separate cache for protobuf serialized objects. &ndash;&gt;-->
-                                    <!--<command>/subsystem=infinispan/cache-container=local/local-cache=remote_query:add(start=EAGER)</command>-->
-                                    <!--&lt;!&ndash; Separate cache for converter factory which uses Int keys &ndash;&gt;-->
-                                    <!--<command>/subsystem=infinispan/cache-container=local/local-cache=static_converter_factory:add(start=EAGER)</command>-->
-                                <!--</commands>-->
-                            <!--</executeCommands>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>stop-server</id>-->
-                        <!--<phase>prepare-package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>shutdown</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<skip>${skipTests}</skip>-->
-                            <!--<jbossHome>${jdg.home}</jbossHome>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.1.0.Alpha6</version>
+                <executions>
+                    <execution>
+                        <id>start-server</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <jbossHome>${jdg.home}</jbossHome>
+                            <javaOpts>
+                                <javaOpt>-Dinfinispan.accurate.bulk.ops=true</javaOpt>
+                                <javaOpt>-Djboss.socket.binding.port-offset=100</javaOpt>
+                                <javaOpt>-Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true</javaOpt>
+                            </javaOpts>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-server</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>shutdown</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <port>10090</port>
+                    <username/>
+                    <password/>
+                    <hostname/>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>create-cache-on-jdg-server</id>
+                        <phase>process-test-classes</phase>
+                        <configuration>
+                            <tasks>
+                                <exec executable="sh">
+                                    <arg value="${project.basedir}/src/test/resources/setupcaches.sh"/>
+                                    <arg value="${jdg.home}"/>
+                                </exec>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <systemPropertyVariables>
+                        <threadCount>1</threadCount>
+                        <parallel>classes</parallel>
+                        <parallelTestsTimeoutForcedInSeconds>90</parallelTestsTimeoutForcedInSeconds>
                         <org.ops4j.pax.url.mvn.localRepository>${maven.repo.local}</org.ops4j.pax.url.mvn.localRepository>
                         <infinispan.accurate.bulk.ops>true</infinispan.accurate.bulk.ops>
                         <resources.dir>${project.build.directory}/test-classes</resources.dir>

@@ -4,9 +4,9 @@ How to run tests
 1) Make sure your settings.xml includes the following repository:
 
    <repository>
-     <id>mead-jdg6</id>
-     <name>MEAD JDG6 Maven Repository</name>
-     <url>http://download.lab.eng.bos.redhat.com/brewroot/repos/jb-edg-6-rhel-6-build/latest/maven/</url>
+     <id>mead-jdg7</id>
+     <name>MEAD JDG7 Maven Repository</name>
+     <url>http://download.eng.bos.redhat.com/brewroot/repos/jb-dg-7-rhel-7-build/latest/maven</url>
      <releases>
        <enabled>true</enabled>
        <updatePolicy>never</updatePolicy>
