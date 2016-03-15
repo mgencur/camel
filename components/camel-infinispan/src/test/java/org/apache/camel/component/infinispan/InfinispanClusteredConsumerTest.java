@@ -22,7 +22,9 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.infinispan.distribution.MagicKey;
 import org.infinispan.test.fwk.TestResourceTracker;
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -36,13 +38,17 @@ public class InfinispanClusteredConsumerTest extends InfinispanClusterTestSuppor
     @EndpointInject(uri = "mock:resultExpired")
     private MockEndpoint mockResultExpiredEvents;
 
-    @BeforeClass
-    public static void beforeClass() {
+    @Override
+    @Before
+    public void setUp() throws Exception {
         TestResourceTracker.testStarted(InfinispanClusteredConsumerTest.class.getName());
+        super.setUp();
     }
 
-    @AfterClass
-    public static void afterClass() {
+    @Override
+    @After
+    public void tearDown() throws Exception {
+        super.tearDown();
         TestResourceTracker.testFinished(InfinispanClusteredConsumerTest.class.getName());
     }
 

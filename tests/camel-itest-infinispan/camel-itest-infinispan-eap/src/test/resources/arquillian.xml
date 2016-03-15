@@ -10,14 +10,14 @@
         <container qualifier="eap" default="true">
             <configuration>
                 <property name="jbossHome">${eap.home}</property>
-                <property name="managementPort">10099</property>
+                <property name="managementPort">10090</property>
                 <property name="username">${test.username}</property>
                 <property name="password">${test.password}</property>
                 <property name="javaVmArguments">${server.jvm.args} -Djboss.socket.binding.port-offset=100 -Djboss.node.name=node0 -Dinfinispan.accurate.bulk.ops=true
                 </property>
             </configuration>
         </container>
-        <!-- JDG server for client-server tests is started via jboss-as maven plugin where
+        <!-- JDG server for client-server tests is started via wildfly-maven-plugin where
              two additional caches are created via CLI -->
     </group>
 

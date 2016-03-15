@@ -60,8 +60,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-arquillian-container-managed</artifactId>
+            <groupId>org.wildfly.arquillian</groupId>
+            <artifactId>wildfly-arquillian-container-managed</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -178,79 +178,87 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Needs to be adjusted to proper jboss plugin version and enabled -->
-            <!--<plugin>-->
-                <!--<groupId>org.jboss.as.plugins</groupId>-->
-                <!--<artifactId>jboss-as-maven-plugin</artifactId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>start-server</id>-->
-                        <!--<phase>pre-integration-test</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>start</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<skip>${skipTests}</skip>-->
-                            <!--<jbossHome>${jdg.home}</jbossHome>-->
-                            <!--<serverConfig>clustered.xml</serverConfig>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>configure-caches</id>-->
-                        <!--<phase>pre-integration-test</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>execute-commands</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<executeCommands>-->
-                                <!--<commands>-->
-                                    <!--&lt;!&ndash; Separate cache for protobuf serialized objects. &ndash;&gt;-->
-                                    <!--<command>/subsystem=infinispan/cache-container=clustered/distributed-cache=remote_query:add(start=EAGER,mode=SYNC)</command>-->
-                                    <!--&lt;!&ndash; Separate cache for converter factory which uses Int keys &ndash;&gt;-->
-                                    <!--<command>/subsystem=infinispan/cache-container=clustered/distributed-cache=static_converter_factory:add(start=EAGER,mode=SYNC)</command>-->
-                                <!--</commands>-->
-                            <!--</executeCommands>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>start-server2</id>-->
-                        <!--<phase>pre-integration-test</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>start</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<skip>${skipTests}</skip>-->
-                            <!--<jbossHome>${jdg.home}</jbossHome>-->
-                            <!--<serverConfig>clustered.xml</serverConfig>-->
-                            <!--<jvmArgs>-Xms64m -Xmx512m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true -Dorg.jboss.resolver.warning=true -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Djboss.socket.binding.port-offset=200 -Djboss.node.name=clustered2</jvmArgs>-->
-                            <!--<port>10199</port>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>stop-server</id>-->
-                        <!--<phase>post-integration-test</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>shutdown</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<skip>${skipTests}</skip>-->
-                            <!--<jbossHome>${jdg.home}</jbossHome>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>stop-server2</id>-->
-                        <!--<phase>post-integration-test</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>shutdown</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<skip>${skipTests}</skip>-->
-                            <!--<jbossHome>${jdg.home}</jbossHome>-->
-                            <!--<port>10199</port>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.1.0.Alpha6</version>
+                <executions>
+                    <execution>
+                        <id>start-server</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                            <jbossHome>${jdg.home}</jbossHome>
+                            <javaOpts>
+                                <javaOpt>-Djava.net.preferIPv4Stack=true</javaOpt>
+                                <javaOpt>-Dinfinispan.accurate.bulk.ops=true</javaOpt>
+                            </javaOpts>
+                            <serverConfig>clustered.xml</serverConfig>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>start-server2</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                            <jbossHome>${jdg.home}</jbossHome>
+                            <javaOpts>
+                                <javaOpt>-Djboss.socket.binding.port-offset=200</javaOpt>
+                                <javaOpt>-Dinfinispan.accurate.bulk.ops=true</javaOpt>
+                                <javaOpt>-Djava.net.preferIPv4Stack=true</javaOpt>
+                                <javaOpt>-Dorg.jboss.resolver.warning=true</javaOpt>
+                                <javaOpt>-Djboss.node.name=clustered2</javaOpt>
+                            </javaOpts>
+                            <serverConfig>clustered.xml</serverConfig>
+                            <port>10190</port>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-server</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>shutdown</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-server2</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>shutdown</goal>
+                        </goals>
+                        <configuration>
+                            <port>10190</port>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>create-cache-on-jdg-server</id>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <tasks>
+                                <exec executable="sh">
+                                    <arg value="${project.basedir}/src/test/resources/setupcaches.sh"/>
+                                    <arg value="${jdg.home}"/>
+                                </exec>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
@@ -300,29 +308,29 @@
             <build>
                 <plugins>
                     <!-- EAP modules are not packed correctly: https://issues.jboss.org/browse/JDG-37 -->
-                    <!--<plugin>-->
-                        <!--<groupId>org.apache.maven.plugins</groupId>-->
-                        <!--<artifactId>maven-antrun-plugin</artifactId>-->
-                        <!--<executions>-->
-                            <!--<execution>-->
-                                <!--<id>install-eap-modules</id>-->
-                                <!--<phase>pre-integration-test</phase>-->
-                                <!--<configuration>-->
-                                    <!--<tasks>-->
-                                        <!--<copy todir="${eap.home}/modules/system/layers/base/" overwrite="true">-->
-                                            <!--<fileset dir="${eap.modules.library}/modules/" includes="**/*" />-->
-                                        <!--</copy>-->
-                                        <!--<copy todir="${eap.home}/modules/system/layers/base/" overwrite="true">-->
-                                            <!--<fileset dir="${eap.modules.hotrod}/modules/" includes="**/*" />-->
-                                        <!--</copy>-->
-                                    <!--</tasks>-->
-                                <!--</configuration>-->
-                                <!--<goals>-->
-                                    <!--<goal>run</goal>-->
-                                <!--</goals>-->
-                            <!--</execution>-->
-                        <!--</executions>-->
-                    <!--</plugin>-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>install-eap-modules</id>
+                                <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <tasks>
+                                        <copy todir="${eap.home}/modules/system/layers/base/" overwrite="true">
+                                            <fileset dir="${eap.modules.library}/modules/" includes="**/*" />
+                                        </copy>
+                                        <copy todir="${eap.home}/modules/system/layers/base/" overwrite="true">
+                                            <fileset dir="${eap.modules.hotrod}/modules/" includes="**/*" />
+                                        </copy>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>

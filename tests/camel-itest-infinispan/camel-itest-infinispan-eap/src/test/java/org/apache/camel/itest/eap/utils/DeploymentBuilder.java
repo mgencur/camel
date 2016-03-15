@@ -44,8 +44,8 @@ public final class DeploymentBuilder {
 
     public static void addCamelLibraries(WebArchive war) {
         war.addAsLibraries(
-                new File("target/test-libs/camel-jbossdatagrid.jar"),
-                new File("target/test-libs/camel-jbossdatagrid-tests.jar"),
+                new File("target/test-libs/camel-infinispan.jar"),
+                new File("target/test-libs/camel-infinispan-tests.jar"),
                 new File("target/test-libs/camel-core.jar"),
                 new File("target/test-libs/camel-test.jar"));
     }
