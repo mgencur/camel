@@ -79,85 +79,85 @@ public class InfinispanProducerTest extends InfinispanTestSupport {
         assertEquals(VALUE_ONE, value.toString());
     }
 
-    @Test
-    public void publishKeyAndValueAsync() throws Exception {
-        Exchange exchange = template.send("direct:putasync", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
-            }
-        });
+//    @Test
+//    public void publishKeyAndValueAsync() throws Exception {
+//        Exchange exchange = template.send("direct:putasync", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
+//            }
+//        });
+//
+//        Thread.sleep(10000);
+//        NotifyingFuture resultPutAsync = exchange.getIn().getHeader(InfinispanConstants.RESULT, NotifyingFuture.class);
+//        assertEquals(Boolean.TRUE, resultPutAsync.isDone());
+//
+//        Object value = currentCache().get(KEY_ONE);
+//        assertEquals(VALUE_ONE, value.toString());
+//    }
 
-        Thread.sleep(10000);
-        NotifyingFuture resultPutAsync = exchange.getIn().getHeader(InfinispanConstants.RESULT, NotifyingFuture.class);
-        assertEquals(Boolean.TRUE, resultPutAsync.isDone());
+//    @Test
+//    public void publishKeyAndValueAsyncWithLifespan() throws Exception {
+//        Exchange exchange = template.send("direct:putasync", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//            }
+//        });
+//
+//        Thread.sleep(1000);
+//        NotifyingFuture resultPutAsync = exchange.getIn().getHeader(InfinispanConstants.RESULT, NotifyingFuture.class);
+//        assertEquals(Boolean.TRUE, resultPutAsync.isDone());
+//
+//        Object value = currentCache().get(KEY_ONE);
+//        assertEquals(value.toString(), VALUE_ONE);
+//
+//        Thread.sleep(6000);
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
-        Object value = currentCache().get(KEY_ONE);
-        assertEquals(VALUE_ONE, value.toString());
-    }
-
-    @Test
-    public void publishKeyAndValueAsyncWithLifespan() throws Exception {
-        Exchange exchange = template.send("direct:putasync", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-            }
-        });
-
-        Thread.sleep(1000);
-        NotifyingFuture resultPutAsync = exchange.getIn().getHeader(InfinispanConstants.RESULT, NotifyingFuture.class);
-        assertEquals(Boolean.TRUE, resultPutAsync.isDone());
-
-        Object value = currentCache().get(KEY_ONE);
-        assertEquals(value.toString(), VALUE_ONE);
-
-        Thread.sleep(6000);
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
-
-    @Test
-    public void publishKeyAndValueAsyncWithLifespanAndMaxIdle() throws Exception {
-        Exchange exchange = template.send("direct:putasync", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
-            }
-        });
-
-        Thread.sleep(1000);
-        NotifyingFuture resultPutAsync = exchange.getIn().getHeader(InfinispanConstants.RESULT, NotifyingFuture.class);
-        assertEquals(Boolean.TRUE, resultPutAsync.isDone());
-
-        Object value = currentCache().get(KEY_ONE);
-        assertEquals(VALUE_ONE, value.toString());
-
-        Thread.sleep(10000);
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
+//    @Test
+//    public void publishKeyAndValueAsyncWithLifespanAndMaxIdle() throws Exception {
+//        Exchange exchange = template.send("direct:putasync", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
+//            }
+//        });
+//
+//        Thread.sleep(1000);
+//        NotifyingFuture resultPutAsync = exchange.getIn().getHeader(InfinispanConstants.RESULT, NotifyingFuture.class);
+//        assertEquals(Boolean.TRUE, resultPutAsync.isDone());
+//
+//        Object value = currentCache().get(KEY_ONE);
+//        assertEquals(VALUE_ONE, value.toString());
+//
+//        Thread.sleep(10000);
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
     @Test
     public void publishMapNormal() throws Exception {
@@ -179,87 +179,87 @@ public class InfinispanProducerTest extends InfinispanTestSupport {
         assertEquals(VALUE_TWO, value.toString());
     }
 
-    @Test
-    public void publishMapWithLifespan() throws Exception {
-        template.send("direct:start", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                Map<String, String> map = new HashMap<String, String>();
-                map.put(KEY_ONE, VALUE_ONE);
-                map.put(KEY_TWO, VALUE_TWO);
-                exchange.getIn().setHeader(InfinispanConstants.MAP, map);
-                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.PUT_ALL);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-            }
-        });
+//    @Test
+//    public void publishMapWithLifespan() throws Exception {
+//        template.send("direct:start", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                Map<String, String> map = new HashMap<String, String>();
+//                map.put(KEY_ONE, VALUE_ONE);
+//                map.put(KEY_TWO, VALUE_TWO);
+//                exchange.getIn().setHeader(InfinispanConstants.MAP, map);
+//                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.PUT_ALL);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//            }
+//        });
+//
+//        assertEquals(2, currentCache().size());
+//        Object value = currentCache().get(KEY_ONE);
+//        assertEquals(VALUE_ONE, value.toString());
+//        value = currentCache().get(KEY_TWO);
+//        assertEquals(VALUE_TWO, value.toString());
+//
+//        Thread.sleep(LIFESPAN_TIME * 1000);
+//
+//        Exchange exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_TWO);
+//            }
+//        });
+//        resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
-        assertEquals(2, currentCache().size());
-        Object value = currentCache().get(KEY_ONE);
-        assertEquals(VALUE_ONE, value.toString());
-        value = currentCache().get(KEY_TWO);
-        assertEquals(VALUE_TWO, value.toString());
-
-        Thread.sleep(LIFESPAN_TIME * 1000);
-
-        Exchange exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_TWO);
-            }
-        });
-        resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
-
-    @Test
-    public void publishMapWithLifespanAndMaxIdleTime() throws Exception {
-        template.send("direct:start", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                Map<String, String> map = new HashMap<String, String>();
-                map.put(KEY_ONE, VALUE_ONE);
-                map.put(KEY_TWO, VALUE_TWO);
-                exchange.getIn().setHeader(InfinispanConstants.MAP, map);
-                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.PUT_ALL);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
-            }
-        });
-
-        assertEquals(2, currentCache().size());
-
-        Thread.sleep(10000);
-
-        Exchange exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_TWO);
-            }
-        });
-        resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(null);
-    }
+//    @Test
+//    public void publishMapWithLifespanAndMaxIdleTime() throws Exception {
+//        template.send("direct:start", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                Map<String, String> map = new HashMap<String, String>();
+//                map.put(KEY_ONE, VALUE_ONE);
+//                map.put(KEY_TWO, VALUE_TWO);
+//                exchange.getIn().setHeader(InfinispanConstants.MAP, map);
+//                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.PUT_ALL);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
+//            }
+//        });
+//
+//        assertEquals(2, currentCache().size());
+//
+//        Thread.sleep(10000);
+//
+//        Exchange exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_TWO);
+//            }
+//        });
+//        resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(null);
+//    }
 
     @Test
     public void publishMapNormalAsync() throws Exception {
@@ -281,89 +281,89 @@ public class InfinispanProducerTest extends InfinispanTestSupport {
         assertEquals(VALUE_TWO, value.toString());
     }
 
-    @Test
-    public void publishMapWithLifespanAsync() throws Exception {
-        template.send("direct:putallasync", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                Map<String, String> map = new HashMap<String, String>();
-                map.put(KEY_ONE, VALUE_ONE);
-                map.put(KEY_TWO, VALUE_TWO);
-                exchange.getIn().setHeader(InfinispanConstants.MAP, map);
-                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.PUT_ALL);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-            }
-        });
+//    @Test
+//    public void publishMapWithLifespanAsync() throws Exception {
+//        template.send("direct:putallasync", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                Map<String, String> map = new HashMap<String, String>();
+//                map.put(KEY_ONE, VALUE_ONE);
+//                map.put(KEY_TWO, VALUE_TWO);
+//                exchange.getIn().setHeader(InfinispanConstants.MAP, map);
+//                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.PUT_ALL);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//            }
+//        });
+//
+//        Thread.sleep(100);
+//        assertEquals(2, currentCache().size());
+//        Object value = currentCache().get(KEY_ONE);
+//        assertEquals(VALUE_ONE, value.toString());
+//        value = currentCache().get(KEY_TWO);
+//        assertEquals(VALUE_TWO, value.toString());
+//
+//        Thread.sleep(LIFESPAN_TIME * 1000);
+//
+//        Exchange exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_TWO);
+//            }
+//        });
+//        resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
-        Thread.sleep(100);
-        assertEquals(2, currentCache().size());
-        Object value = currentCache().get(KEY_ONE);
-        assertEquals(VALUE_ONE, value.toString());
-        value = currentCache().get(KEY_TWO);
-        assertEquals(VALUE_TWO, value.toString());
-
-        Thread.sleep(LIFESPAN_TIME * 1000);
-
-        Exchange exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_TWO);
-            }
-        });
-        resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
-
-    @Test
-    public void publishMapWithLifespanAndMaxIdleTimeAsync() throws Exception {
-        template.send("direct:putallasync", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                Map<String, String> map = new HashMap<String, String>();
-                map.put(KEY_ONE, VALUE_ONE);
-                map.put(KEY_TWO, VALUE_TWO);
-                exchange.getIn().setHeader(InfinispanConstants.MAP, map);
-                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.PUT_ALL);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
-            }
-        });
-
-        Thread.sleep(100);
-        assertEquals(2, currentCache().size());
-
-        Thread.sleep(10000);
-
-        Exchange exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_TWO);
-            }
-        });
-        resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
+//    @Test
+//    public void publishMapWithLifespanAndMaxIdleTimeAsync() throws Exception {
+//        template.send("direct:putallasync", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                Map<String, String> map = new HashMap<String, String>();
+//                map.put(KEY_ONE, VALUE_ONE);
+//                map.put(KEY_TWO, VALUE_TWO);
+//                exchange.getIn().setHeader(InfinispanConstants.MAP, map);
+//                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.PUT_ALL);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
+//            }
+//        });
+//
+//        Thread.sleep(100);
+//        assertEquals(2, currentCache().size());
+//
+//        Thread.sleep(10000);
+//
+//        Exchange exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_TWO);
+//            }
+//        });
+//        resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
     @Test
     public void putIfAbsentAlreadyExists() throws Exception {
@@ -401,85 +401,85 @@ public class InfinispanProducerTest extends InfinispanTestSupport {
         assertEquals(2, currentCache().size());
     }
 
-    @Test
-    public void putIfAbsentKeyAndValueAsync() throws Exception {
-        Exchange exchange = template.send("direct:putifabsentasync", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
-            }
-        });
+//    @Test
+//    public void putIfAbsentKeyAndValueAsync() throws Exception {
+//        Exchange exchange = template.send("direct:putifabsentasync", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
+//            }
+//        });
+//
+//        Thread.sleep(10000);
+//        NotifyingFuture resultPutAsync = exchange.getIn().getHeader(InfinispanConstants.RESULT, NotifyingFuture.class);
+//        assertEquals(Boolean.TRUE, resultPutAsync.isDone());
+//
+//        Object value = currentCache().get(KEY_ONE);
+//        assertEquals(VALUE_ONE, value.toString());
+//    }
 
-        Thread.sleep(10000);
-        NotifyingFuture resultPutAsync = exchange.getIn().getHeader(InfinispanConstants.RESULT, NotifyingFuture.class);
-        assertEquals(Boolean.TRUE, resultPutAsync.isDone());
+//    @Test
+//    public void putIfAbsentKeyAndValueAsyncWithLifespan() throws Exception {
+//        Exchange exchange = template.send("direct:putifabsentasync", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//            }
+//        });
+//
+//        Thread.sleep(1000);
+//        NotifyingFuture resultPutAsync = exchange.getIn().getHeader(InfinispanConstants.RESULT, NotifyingFuture.class);
+//        assertEquals(Boolean.TRUE, resultPutAsync.isDone());
+//
+//        Object value = currentCache().get(KEY_ONE);
+//        assertEquals(VALUE_ONE, value.toString());
+//
+//        Thread.sleep(6000);
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
-        Object value = currentCache().get(KEY_ONE);
-        assertEquals(VALUE_ONE, value.toString());
-    }
-
-    @Test
-    public void putIfAbsentKeyAndValueAsyncWithLifespan() throws Exception {
-        Exchange exchange = template.send("direct:putifabsentasync", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-            }
-        });
-
-        Thread.sleep(1000);
-        NotifyingFuture resultPutAsync = exchange.getIn().getHeader(InfinispanConstants.RESULT, NotifyingFuture.class);
-        assertEquals(Boolean.TRUE, resultPutAsync.isDone());
-
-        Object value = currentCache().get(KEY_ONE);
-        assertEquals(VALUE_ONE, value.toString());
-
-        Thread.sleep(6000);
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
-
-    @Test
-    public void putIfAbsentKeyAndValueAsyncWithLifespanAndMaxIdle() throws Exception {
-        Exchange exchange = template.send("direct:putifabsentasync", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
-            }
-        });
-
-        Thread.sleep(1000);
-        NotifyingFuture resultPutAsync = exchange.getIn().getHeader(InfinispanConstants.RESULT, NotifyingFuture.class);
-        assertEquals(Boolean.TRUE, resultPutAsync.isDone());
-
-        Object value = currentCache().get(KEY_ONE);
-        assertEquals(VALUE_ONE, value.toString());
-
-        Thread.sleep(10000);
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
+//    @Test
+//    public void putIfAbsentKeyAndValueAsyncWithLifespanAndMaxIdle() throws Exception {
+//        Exchange exchange = template.send("direct:putifabsentasync", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
+//            }
+//        });
+//
+//        Thread.sleep(1000);
+//        NotifyingFuture resultPutAsync = exchange.getIn().getHeader(InfinispanConstants.RESULT, NotifyingFuture.class);
+//        assertEquals(Boolean.TRUE, resultPutAsync.isDone());
+//
+//        Object value = currentCache().get(KEY_ONE);
+//        assertEquals(VALUE_ONE, value.toString());
+//
+//        Thread.sleep(10000);
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
     @Test
     public void notContainsKeyTest() throws Exception {
@@ -545,43 +545,43 @@ public class InfinispanProducerTest extends InfinispanTestSupport {
         assertTrue(cacheContainsValue);
     }
 
-    @Test
-    public void publishKeyAndValueWithLifespan() throws Exception {
-        template.send("direct:start", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.PUT);
-            }
-        });
-
-        Object value = currentCache().get(KEY_ONE);
-        assertEquals(VALUE_ONE, value.toString());
-
-        Exchange exchange;
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertEquals(VALUE_ONE, resultGet);
-
-        Thread.sleep(LIFESPAN_TIME * 1000);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
+//    @Test
+//    public void publishKeyAndValueWithLifespan() throws Exception {
+//        template.send("direct:start", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.PUT);
+//            }
+//        });
+//
+//        Object value = currentCache().get(KEY_ONE);
+//        assertEquals(VALUE_ONE, value.toString());
+//
+//        Exchange exchange;
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertEquals(VALUE_ONE, resultGet);
+//
+//        Thread.sleep(LIFESPAN_TIME * 1000);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
     @Test
     public void putOperationReturnsThePreviousValue() throws Exception {
@@ -632,67 +632,67 @@ public class InfinispanProducerTest extends InfinispanTestSupport {
         assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
     }
 
-    @Test
-    public void replaceAValueByKeyWithLifespan() throws Exception {
-        currentCache().put(KEY_ONE, VALUE_ONE);
+//    @Test
+//    public void replaceAValueByKeyWithLifespan() throws Exception {
+//        currentCache().put(KEY_ONE, VALUE_ONE);
+//
+//        Exchange exchange = template.request("direct:replace", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.REPLACE);
+//            }
+//        });
+//
+//        assertEquals(VALUE_ONE, exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class));
+//        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
+//
+//        Thread.sleep(LIFESPAN_TIME * 1000);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
-        Exchange exchange = template.request("direct:replace", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.REPLACE);
-            }
-        });
-
-        assertEquals(VALUE_ONE, exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class));
-        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
-
-        Thread.sleep(LIFESPAN_TIME * 1000);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
-
-    @Test
-    public void replaceAValueByKeyWithLifespanAndMaxIdleTime() throws Exception {
-        currentCache().put(KEY_ONE, VALUE_ONE);
-
-        Exchange exchange = template.request("direct:replace", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.REPLACE);
-            }
-        });
-
-        assertEquals(VALUE_ONE, exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class));
-        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
-
-        Thread.sleep(10000);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
+//    @Test
+//    public void replaceAValueByKeyWithLifespanAndMaxIdleTime() throws Exception {
+//        currentCache().put(KEY_ONE, VALUE_ONE);
+//
+//        Exchange exchange = template.request("direct:replace", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.REPLACE);
+//            }
+//        });
+//
+//        assertEquals(VALUE_ONE, exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class));
+//        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
+//
+//        Thread.sleep(10000);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
     @Test
     public void replaceAValueByKeyWithOldValue() throws Exception {
@@ -712,69 +712,69 @@ public class InfinispanProducerTest extends InfinispanTestSupport {
         assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
     }
 
-    @Test
-    public void replaceAValueByKeyWithLifespanWithOldValue() throws Exception {
-        currentCache().put(KEY_ONE, VALUE_ONE);
+//    @Test
+//    public void replaceAValueByKeyWithLifespanWithOldValue() throws Exception {
+//        currentCache().put(KEY_ONE, VALUE_ONE);
+//
+//        Exchange exchange = template.request("direct:replace", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
+//                exchange.getIn().setHeader(InfinispanConstants.OLD_VALUE, VALUE_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.REPLACE);
+//            }
+//        });
+//
+//        assertTrue(exchange.getIn().getHeader(InfinispanConstants.RESULT, Boolean.class));
+//        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
+//
+//        Thread.sleep(LIFESPAN_TIME * 1100);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
-        Exchange exchange = template.request("direct:replace", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
-                exchange.getIn().setHeader(InfinispanConstants.OLD_VALUE, VALUE_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.REPLACE);
-            }
-        });
-
-        assertTrue(exchange.getIn().getHeader(InfinispanConstants.RESULT, Boolean.class));
-        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
-
-        Thread.sleep(LIFESPAN_TIME * 1100);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
-
-    @Test
-    public void replaceAValueByKeyWithLifespanAndMaxIdleTimeWithOldValue() throws Exception {
-        currentCache().put(KEY_ONE, VALUE_ONE);
-
-        Exchange exchange = template.request("direct:replace", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
-                exchange.getIn().setHeader(InfinispanConstants.OLD_VALUE, VALUE_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.REPLACE);
-            }
-        });
-
-        assertTrue(exchange.getIn().getHeader(InfinispanConstants.RESULT, Boolean.class));
-        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
-
-        Thread.sleep(10000);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
+//    @Test
+//    public void replaceAValueByKeyWithLifespanAndMaxIdleTimeWithOldValue() throws Exception {
+//        currentCache().put(KEY_ONE, VALUE_ONE);
+//
+//        Exchange exchange = template.request("direct:replace", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
+//                exchange.getIn().setHeader(InfinispanConstants.OLD_VALUE, VALUE_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.OPERATION, InfinispanConstants.REPLACE);
+//            }
+//        });
+//
+//        assertTrue(exchange.getIn().getHeader(InfinispanConstants.RESULT, Boolean.class));
+//        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
+//
+//        Thread.sleep(10000);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
 
     @Test
@@ -793,66 +793,66 @@ public class InfinispanProducerTest extends InfinispanTestSupport {
         assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
     }
 
-    @Test
-    public void replaceAValueByKeyWithLifespanAsync() throws Exception {
-        currentCache().put(KEY_ONE, VALUE_ONE);
+//    @Test
+//    public void replaceAValueByKeyWithLifespanAsync() throws Exception {
+//        currentCache().put(KEY_ONE, VALUE_ONE);
+//
+//        Exchange exchange = template.request("direct:replaceasync", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//            }
+//        });
+//
+//        assertEquals(exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class), VALUE_ONE);
+//        assertEquals(currentCache().get(KEY_ONE), VALUE_TWO);
+//
+//        TimeUnit.SECONDS.sleep(LIFESPAN_TIME + 1);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertEquals(null, resultGet);
+//    }
 
-        Exchange exchange = template.request("direct:replaceasync", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-            }
-        });
 
-        assertEquals(exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class), VALUE_ONE);
-        assertEquals(currentCache().get(KEY_ONE), VALUE_TWO);
-
-        TimeUnit.SECONDS.sleep(LIFESPAN_TIME + 1);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertEquals(null, resultGet);
-    }
-
-
-    @Test
-    public void replaceAValueByKeyWithLifespanAndMaxIdleTimeAsync() throws Exception {
-        currentCache().put(KEY_ONE, VALUE_ONE);
-
-        Exchange exchange = template.request("direct:replaceasync", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
-            }
-        });
-
-        assertEquals(VALUE_ONE, exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class));
-        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
-
-        Thread.sleep(10000);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
+//    @Test
+//    public void replaceAValueByKeyWithLifespanAndMaxIdleTimeAsync() throws Exception {
+//        currentCache().put(KEY_ONE, VALUE_ONE);
+//
+//        Exchange exchange = template.request("direct:replaceasync", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
+//            }
+//        });
+//
+//        assertEquals(VALUE_ONE, exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class));
+//        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
+//
+//        Thread.sleep(10000);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
     @Test
     public void replaceAValueByKeyAsyncWithOldValue() throws Exception {
@@ -871,67 +871,67 @@ public class InfinispanProducerTest extends InfinispanTestSupport {
         assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
     }
 
-    @Test
-    public void replaceAValueByKeyWithLifespanAsyncWithOldValue() throws Exception {
-        currentCache().put(KEY_ONE, VALUE_ONE);
+//    @Test
+//    public void replaceAValueByKeyWithLifespanAsyncWithOldValue() throws Exception {
+//        currentCache().put(KEY_ONE, VALUE_ONE);
+//
+//        Exchange exchange = template.request("direct:replaceasync", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
+//                exchange.getIn().setHeader(InfinispanConstants.OLD_VALUE, VALUE_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//            }
+//        });
+//
+//        assertTrue(exchange.getIn().getHeader(InfinispanConstants.RESULT, Boolean.class));
+//        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
+//
+//        Thread.sleep(LIFESPAN_TIME * 1100);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
-        Exchange exchange = template.request("direct:replaceasync", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
-                exchange.getIn().setHeader(InfinispanConstants.OLD_VALUE, VALUE_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-            }
-        });
-
-        assertTrue(exchange.getIn().getHeader(InfinispanConstants.RESULT, Boolean.class));
-        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
-
-        Thread.sleep(LIFESPAN_TIME * 1100);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
-
-    @Test
-    public void replaceAValueByKeyWithLifespanAndMaxIdleTimeAsyncWithOldValue() throws Exception {
-        currentCache().put(KEY_ONE, VALUE_ONE);
-
-        Exchange exchange = template.request("direct:replaceasync", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
-                exchange.getIn().setHeader(InfinispanConstants.OLD_VALUE, VALUE_ONE);
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
-                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
-                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
-            }
-        });
-
-        assertTrue(exchange.getIn().getHeader(InfinispanConstants.RESULT, Boolean.class));
-        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
-
-        Thread.sleep(10000);
-
-        exchange = template.send("direct:get", new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
-            }
-        });
-        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
-        assertNull(resultGet);
-    }
+//    @Test
+//    public void replaceAValueByKeyWithLifespanAndMaxIdleTimeAsyncWithOldValue() throws Exception {
+//        currentCache().put(KEY_ONE, VALUE_ONE);
+//
+//        Exchange exchange = template.request("direct:replaceasync", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.VALUE, VALUE_TWO);
+//                exchange.getIn().setHeader(InfinispanConstants.OLD_VALUE, VALUE_ONE);
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME, new Long(LIFESPAN_FOR_MAX_IDLE));
+//                exchange.getIn().setHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, TimeUnit.SECONDS.toString());
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME, new Long(MAX_IDLE_TIME));
+//                exchange.getIn().setHeader(InfinispanConstants.MAX_IDLE_TIME_UNIT, TimeUnit.SECONDS.toString());
+//            }
+//        });
+//
+//        assertTrue(exchange.getIn().getHeader(InfinispanConstants.RESULT, Boolean.class));
+//        assertEquals(VALUE_TWO, currentCache().get(KEY_ONE));
+//
+//        Thread.sleep(10000);
+//
+//        exchange = template.send("direct:get", new Processor() {
+//            @Override
+//            public void process(Exchange exchange) throws Exception {
+//                exchange.getIn().setHeader(InfinispanConstants.KEY, KEY_ONE);
+//            }
+//        });
+//        String resultGet = exchange.getIn().getHeader(InfinispanConstants.RESULT, String.class);
+//        assertNull(resultGet);
+//    }
 
     @Test
     public void deletesExistingValueByKey() throws Exception {
