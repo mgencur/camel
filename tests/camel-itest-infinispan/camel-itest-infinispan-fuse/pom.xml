@@ -244,6 +244,9 @@
                         <infinispan.accurate.bulk.ops>true</infinispan.accurate.bulk.ops>
                         <resources.dir>${project.build.directory}/test-classes</resources.dir>
                     </systemPropertyVariables>
+                        <!--<excludes>-->
+                            <!--<exclude>**/OSGiInfinispanProducerTest.java</exclude>-->
+                        <!--</excludes>-->
                 </configuration>
             </plugin>
         </plugins>
