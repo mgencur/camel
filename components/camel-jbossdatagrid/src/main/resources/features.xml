@@ -17,10 +17,10 @@
     <repository>mvn:org.infinispan/infinispan-core/${infinispan-version}/xml/features</repository>
     <repository>mvn:org.infinispan/infinispan-client-hotrod/${infinispan-version}/xml/features</repository>
 
-    <feature name='camel-infinispan' version='${project.version}' resolver='(obr)' start-level='50'>
-        <details>The camel-infinispan feature can only run on a SUN JVM. You need to add the package sun.misc to the java platform packages in the etc/jre.properties file.</details>
+    <feature name='camel-jbossdatagrid' version='${project.version}' resolver='(obr)' start-level='50'>
+        <details>The camel-jbossdatagrid feature can only run on a SUN JVM. You need to add the package sun.misc to the java platform packages in the etc/jre.properties file.</details>
         <feature version='${infinispan-version}'>infinispan-core</feature>
         <feature version='${infinispan-version}'>infinispan-client-hotrod-with-query</feature>
-        <bundle>mvn:org.apache.camel/camel-infinispan/${project.version}</bundle>
+        <bundle>mvn:org.apache.camel/camel-jbossdatagrid/${project.version}</bundle>
     </feature>
 </features>

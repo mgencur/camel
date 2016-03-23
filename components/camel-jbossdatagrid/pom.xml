@@ -25,10 +25,10 @@
         <version>2.15.1-redhat-SNAPSHOT</version>
     </parent>
 
-    <artifactId>camel-infinispan</artifactId>
+    <artifactId>camel-jbossdatagrid</artifactId>
     <packaging>bundle</packaging>
-    <name>Camel :: Infinispan</name>
-    <description>Camel Infinispan support</description>
+    <name>Camel :: JBoss Data Grid</name>
+    <description>Camel JBoss Data Grid support</description>
 
     <properties>
         <camel.osgi.export.pkg>org.apache.camel.component.infinispan.*</camel.osgi.export.pkg>
