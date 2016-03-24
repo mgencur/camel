@@ -18,12 +18,12 @@ package org.apache.camel.component.infinispan;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.CompletableFuture;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.component.infinispan.remote.InfinispanRemoteOperation;
 import org.apache.camel.util.ObjectHelper;
 import org.infinispan.commons.api.BasicCache;
-import org.infinispan.commons.util.concurrent.NotifyingFuture;
 import org.infinispan.query.dsl.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +79,7 @@ public final class InfinispanOperation {
         }, PUTASYNC {
             @Override
             void execute(BasicCache<Object, Object> cache, Exchange exchange) {
-                NotifyingFuture result;
+                CompletableFuture result;
                 if (!ObjectHelper.isEmpty(exchange.getIn().getHeader(InfinispanConstants.IGNORE_RETURN_VALUES))) {
                     cache = InfinispanUtil.ignoreReturnValuesCache(cache);
                 }
@@ -120,7 +120,7 @@ public final class InfinispanOperation {
         }, PUTALLASYNC {
             @Override
             void execute(BasicCache<Object, Object> cache, Exchange exchange) {
-                NotifyingFuture result;
+                CompletableFuture result;
                 if (!ObjectHelper.isEmpty(exchange.getIn().getHeader(InfinispanConstants.LIFESPAN_TIME)) && !ObjectHelper.isEmpty(exchange.getIn().getHeader(InfinispanConstants.LIFESPAN_TIME_UNIT))) {
                     long lifespan = exchange.getIn().getHeader(InfinispanConstants.LIFESPAN_TIME, long.class);
                     String timeUnit =  exchange.getIn().getHeader(InfinispanConstants.LIFESPAN_TIME_UNIT, String.class);
@@ -163,7 +163,7 @@ public final class InfinispanOperation {
         }, PUTIFABSENTASYNC {
             @Override
             void execute(BasicCache<Object, Object> cache, Exchange exchange) {
-                NotifyingFuture result;
+                CompletableFuture result;
                 if (!ObjectHelper.isEmpty(exchange.getIn().getHeader(InfinispanConstants.IGNORE_RETURN_VALUES))) {
                     cache = InfinispanUtil.ignoreReturnValuesCache(cache);
                 }
@@ -218,7 +218,7 @@ public final class InfinispanOperation {
         }, REMOVEASYNC {
             @Override
             void execute(BasicCache<Object, Object> cache, Exchange exchange) {
-                NotifyingFuture result;
+                CompletableFuture result;
                 if (!ObjectHelper.isEmpty(exchange.getIn().getHeader(InfinispanConstants.IGNORE_RETURN_VALUES))) {
                     cache = InfinispanUtil.ignoreReturnValuesCache(cache);
                 }
@@ -267,7 +267,7 @@ public final class InfinispanOperation {
         }, REPLACEASYNC {
             @Override
             void execute(BasicCache<Object, Object> cache, Exchange exchange) {
-                NotifyingFuture result;
+                CompletableFuture result;
                 if (!ObjectHelper.isEmpty(exchange.getIn().getHeader(InfinispanConstants.IGNORE_RETURN_VALUES))) {
                     cache = InfinispanUtil.ignoreReturnValuesCache(cache);
                 }
@@ -313,7 +313,7 @@ public final class InfinispanOperation {
         }, CLEARASYNC {
             @Override
             void execute(BasicCache<Object, Object> cache, Exchange exchange) {
-                NotifyingFuture result;
+                CompletableFuture result;
                 result = cache.clearAsync();
                 setResult(result, exchange);
             }

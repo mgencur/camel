@@ -141,7 +141,7 @@ public class InfinispanRemoteQueryProducerIT extends CamelTestSupport {
                 exchange.getIn().setHeader(OPERATION, QUERY);
                 exchange.getIn().setHeader(QUERY_BUILDER,
                         new InfinispanQueryBuilder() {
-                            public Query build(QueryFactory<Query> queryFactory) {
+                            public Query build(QueryFactory queryFactory) {
                                 return queryFactory.from(User.class)
                                         .having("name").like("%abc%")
                                         .toBuilder().build();
@@ -165,7 +165,7 @@ public class InfinispanRemoteQueryProducerIT extends CamelTestSupport {
                 Message in = exchange.getIn();
                 in.setHeader(OPERATION, QUERY);
                 in.setHeader(QUERY_BUILDER, new InfinispanQueryBuilder() {
-                    public Query build(QueryFactory<Query> queryFactory) {
+                    public Query build(QueryFactory queryFactory) {
                         return queryFactory.from(User.class).having("name")
                                 .like("%A").toBuilder().build();
                     }
