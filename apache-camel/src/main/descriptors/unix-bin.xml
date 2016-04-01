@@ -32,29 +32,6 @@
       <lineEnding>unix</lineEnding>
     </fileSet>
 
-    <!-- copy the examples -->
-    <fileSet>
-      <directory>../examples</directory>
-      <outputDirectory>/examples</outputDirectory>
-      <excludes>
-        <!-- disable build, IDEA and Eclipse files -->
-        <exclude>**/*.i??</exclude>
-        <exclude>**/eclipse-classes/**</exclude>
-        <exclude>**/.project</exclude>
-        <exclude>**/.classpath</exclude>
-        <exclude>**/target/</exclude>
-        <exclude>**/target/*</exclude>
-        <exclude>**/*.ser</exclude>
-        <exclude>**/*.log</exclude>
-        <!-- exclude README.txt which need get filtered -->
-        <exclude>**/camel-example-reportincident-wssecurity/README.txt</exclude>
-        <exclude>**/camel-example-osgi/README.txt</exclude>
-        <exclude>**/camel-example-cxf-osgi/README.txt</exclude>
-        <exclude>**/camel-example-cxf-blueprint/README.txt</exclude>
-      </excludes>
-      <lineEnding>unix</lineEnding>
-    </fileSet>
-
     <!-- copy the manual docs -->
     <fileSet>
       <directory>${basedir}/../tooling/camel-manual/target/site/manual/</directory>
@@ -72,39 +49,15 @@
         <include>**/**</include>
       </includes>
     </fileSet>
+    
+    <fileSet>
+      <directory>${basedir}/../components/camel-jbossdatagrid/target/site/apidocs/</directory>
+      <outputDirectory>/doc/apidocs</outputDirectory>
+      <includes>
+        <include>**/**</include>
+      </includes>
+    </fileSet>
   </fileSets>
-
-  <files>
-    <!--filtering README.txt-->
-    <file>
-      <source>../examples/camel-example-reportincident-wssecurity/README.txt</source>
-      <outputDirectory>/examples/camel-example-reportincident-wssecurity</outputDirectory>
-      <filtered>true</filtered>
-      <fileMode>0644</fileMode>
-      <lineEnding>unix</lineEnding>
-    </file>
-    <file>
-      <source>../examples/camel-example-osgi/README.txt</source>
-      <outputDirectory>/examples/camel-example-osgi</outputDirectory>
-      <filtered>true</filtered>
-      <fileMode>0644</fileMode>
-      <lineEnding>unix</lineEnding>
-    </file>
-    <file>
-      <source>../examples/camel-example-cxf-osgi/README.txt</source>
-      <outputDirectory>/examples/camel-example-cxf-osgi</outputDirectory>
-      <filtered>true</filtered>
-      <fileMode>0644</fileMode>
-      <lineEnding>unix</lineEnding>
-    </file>
-    <file>
-      <source>../examples/camel-example-cxf-blueprint/README.txt</source>
-      <outputDirectory>/examples/camel-example-cxf-blueprint</outputDirectory>
-      <filtered>true</filtered>
-      <fileMode>0644</fileMode>
-      <lineEnding>unix</lineEnding>
-    </file>
-  </files>
 
 
   <componentDescriptors>
