@@ -316,11 +316,11 @@
   <profiles>
     <profile>
       <id>assembly</id>
-      <!--<activation>-->
-        <!--<property>-->
-          <!--<name>!noassembly</name>-->
-        <!--</property>-->
-      <!--</activation>-->
+      <activation>
+        <property>
+          <name>!noassembly</name>
+        </property>
+      </activation>
       <modules>
         <module>apache-camel</module>
       </modules>
