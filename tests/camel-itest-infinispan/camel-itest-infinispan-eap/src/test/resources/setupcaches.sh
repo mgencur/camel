@@ -1,1 +1,2 @@
-java -jar $1/bin/client/jboss-cli-client.jar --controller=localhost:9990 -c /subsystem=datagrid-infinispan/cache-container=clustered/distributed-cache=remote_query:add\(configuration="default"\)
+java -jar $1/bin/client/jboss-cli-client.jar --controller=localhost:9990 -c /subsystem=datagrid-infinispan/cache-container=clustered/configurations=CONFIGURATIONS/distributed-cache-configuration=remote_query_template:add\(mode="SYNC",start="EAGER"\)
+java -jar $1/bin/client/jboss-cli-client.jar --controller=localhost:9990 -c /subsystem=datagrid-infinispan/cache-container=clustered/distributed-cache=remote_query:add\(configuration="remote_query_template"\)

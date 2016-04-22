@@ -37,7 +37,7 @@
         <transport.stack>-Djboss.default.jgroups.stack=${default.transport.stack}</transport.stack>
         <jvm.ip.stack>-Djava.net.preferIPv4Stack=true</jvm.ip.stack>
         <server.jvm.args>${jvm.ip.stack} ${jvm.memory.args} ${transport.stack}</server.jvm.args>
-        <datagrid.slot>ispn-8.3</datagrid.slot>
+        <datagrid.slot>jdg-7.0</datagrid.slot>
     </properties>
 
     <dependencies>
