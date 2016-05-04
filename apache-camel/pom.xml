@@ -62,7 +62,7 @@
                     <descriptor>src/main/descriptors/unix-bin.xml</descriptor>
                     <!-- <descriptor>src/main/descriptors/windows-bin.xml</descriptor> -->
                   </descriptors>
-                  <finalName>camel-jbossdatagrid-${project.version}</finalName>
+                  <finalName>${project.artifactId}-${project.version}</finalName>
                   <appendAssemblyId>false</appendAssemblyId>
                   <tarLongFileMode>gnu</tarLongFileMode>
                 </configuration>
