@@ -243,6 +243,7 @@
                         <org.ops4j.pax.url.mvn.localRepository>${maven.repo.local}</org.ops4j.pax.url.mvn.localRepository>
                         <infinispan.accurate.bulk.ops>true</infinispan.accurate.bulk.ops>
                         <resources.dir>${project.build.directory}/test-classes</resources.dir>
+                        <camel.test.version>${camel.test.version}</camel.test.version>
                     </systemPropertyVariables>
                         <!--<excludes>-->
                             <!--<exclude>**/OSGiInfinispanProducerTest.java</exclude>-->
@@ -251,5 +252,12 @@
             </plugin>
         </plugins>
     </build>
-
+    <profiles>
+        <profile>
+            <id>fuse62</id>
+            <properties>
+               <camel.test.version>2.15.1</camel.test.version>
+            </properties>
+        </profile>
+    </profiles>
 </project>

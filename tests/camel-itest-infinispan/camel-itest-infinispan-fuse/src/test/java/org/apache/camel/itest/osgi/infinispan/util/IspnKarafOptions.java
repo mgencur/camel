@@ -2,7 +2,6 @@ package org.apache.camel.itest.osgi.infinispan.util;
 
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.karaf.options.LogLevelOption;
-import org.ops4j.pax.exam.options.AbstractUrlProvisionOption;
 import org.ops4j.pax.exam.options.RawUrlReference;
 import org.ops4j.pax.exam.options.UrlProvisionOption;
 import org.ops4j.pax.exam.options.WrappedUrlProvisionOption;
@@ -24,7 +23,8 @@ public class IspnKarafOptions {
     private static final String PROP_VERBOSE_KARAF = "verbose.karaf";
     private static final String PROP_FUSE_ZIP = "fuse.zip";
     private static final String RESOURCES_DIR = System.getProperty("resources.dir", System.getProperty("java.io.tmpdir"));
-
+    private static final String CAMEL_TEST_VERSION = System.getProperty("camel.test.version");
+    
     public static Option commonOptions() throws Exception {
         return composite(fuseContainer(),
                 vmOptions("-Djava.net.preferIPv4Stack=true", "-Djgroups.bind_addr=127.0.0.1", "-Dinfinispan.accurate.bulk.ops=true"),
@@ -105,7 +105,7 @@ public class IspnKarafOptions {
     public static Option mvnFeature(String groupId, String artifactId, String feature, String version) {
         if (version == null) {
             return features(maven().groupId(groupId).artifactId(artifactId).type("xml")
-                .classifier("features").versionAsInProject(), feature);
+               .classifier("features").versionAsInProject(), feature);
         } else {
             return features(maven().groupId(groupId).artifactId(artifactId).type("xml")
                 .classifier("features").version(version), feature);
@@ -113,8 +113,13 @@ public class IspnKarafOptions {
     }
 
     public static Option camelTestOptions() {
-        return composite(mavenBundle().groupId("org.apache.camel").artifactId("camel-test").type("jar").versionAsInProject(),
+        if (CAMEL_TEST_VERSION != null) {
+            return composite(mavenBundle().groupId("org.apache.camel").artifactId("camel-test").type("jar").version(CAMEL_TEST_VERSION),
+                         mavenBundle().groupId("org.apache.camel").artifactId("camel-core-osgi").type("jar").version(CAMEL_TEST_VERSION));
+        } else {
+            return composite(mavenBundle().groupId("org.apache.camel").artifactId("camel-test").type("jar").versionAsInProject(),
                          mavenBundle().groupId("org.apache.camel").artifactId("camel-core-osgi").type("jar").versionAsInProject());
+        }
     }
 
     public static Option queryDomainObjects() {

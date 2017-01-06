@@ -79,7 +79,7 @@
     <boxjavalibv2.version>3.2.1</boxjavalibv2.version>
     <build-helper-maven-plugin-version>1.8</build-helper-maven-plugin-version>
     <cache-api-version>1.0.0</cache-api-version>
-    <camel-version>2.15.1.redhat-621084</camel-version>
+    <camel-version>2.17.0.redhat-630187</camel-version>
     <c3p0-version>0.9.1.2</c3p0-version>
     <camel-test-spring-artifactId>camel-test-spring</camel-test-spring-artifactId>
     <cassandra-driver-version>2.1.5</cassandra-driver-version>
@@ -532,8 +532,8 @@
     <zxing-bundle-version>3.0.1_1</zxing-bundle-version>
 
     <!-- OSGi bundles properties -->
-    <camel.osgi.import.camel.version>version="[$(version;==;${camel.osgi.version.clean}),$(version;=+;${camel.osgi.version.clean}))"</camel.osgi.import.camel.version>
-    <camel.osgi.import.strict.version>version="[$(version;===;${camel.osgi.version.clean}),$(version;==+;${camel.osgi.version.clean}))"</camel.osgi.import.strict.version>
+    <camel.osgi.import.camel.version>version="[2.15.1,2.18)"</camel.osgi.import.camel.version>
+    <camel.osgi.import.strict.version>version="[2.15.1,2.18)"</camel.osgi.import.strict.version>
     <camel.osgi.import.default.version>[$(version;==;$(@)),$(version;+;$(@)))</camel.osgi.import.default.version>
     <camel.osgi.import.defaults>
       org.osgi.framework*;version="[1.5,2)",
